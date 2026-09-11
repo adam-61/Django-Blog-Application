@@ -132,35 +132,39 @@ Administrators can add, edit, and delete blog posts through the admin interface.
 
 ## Home Page
 
-<img src="screenshots/home.png" alt="Home Page" width="800">
+<img src="screenshots/blog_home.png" alt="Home Page" width="800">
 
 ## Registration Page
 
-<img src="screenshots/register.png" alt="Registration Page" width="800">
+<img src="screenshots/blog_createAC.png" alt="Registration Page" width="800">
 
 ## Login Page
 
-<img src="screenshots/login.png" alt="Login Page" width="800">
+<img src="screenshots/blog_login.png" alt="Login Page" width="800">
 
 ## Create Post Page
 
-<img src="screenshots/create-post.png" alt="Create Post Page" width="800">
+<img src="screenshots/blog_create.png" alt="Create Post Page" width="800">
 
 ## Post Details Page
 
-<img src="screenshots/post-detail.png" alt="Post Details Page" width="800">
+<img src="screenshots/blog_detail.png" alt="Post Details Page" width="800">
 
 ## My Posts Page
 
-<img src="screenshots/my-posts.png" alt="My Posts Page" width="800">
+<img src="screenshots/blog_myposts.png" alt="My Posts Page" width="800">
 
 ## Edit Post Page
 
-<img src="screenshots/edit-post.png" alt="Edit Post Page" width="800">
+<img src="screenshots/blog_edit.png" alt="Edit Post Page" width="800">
 
 ## Delete Confirmation Page
 
-<img src="screenshots/delete-post.png" alt="Delete Confirmation Page" width="800">
+<img src="screenshots/blog_delete.png" alt="Delete Confirmation Page" width="800">
+
+## Django admin panel
+
+<img src="screenshots/django_admin.png" alt="Delete Confirmation Page" width="800">
 
 # How to Run the Project
 
