@@ -175,7 +175,7 @@ Follow these steps to run the Django Blog Application on your computer.
 Clone the project from GitHub:
 
 ```bash
-git clone URL
+git clone https://github.com/adam-61/Django-Blog-Application/
 
 ## Follow the instructions below.
 
@@ -183,8 +183,9 @@ git clone URL
 - python -m venv venv
 - venv\Scripts\activate
 - pip install -r requirements.txt
+- cd blog_project
 - python manage.py migrate
 - python manage.py createsuperuser
 - python manage.py runserver
 - http://127.0.0.1:8000/
-- http://127.0.0.1:8000/admin/
+- http://127.0.0.1:8000/admin/ (Django Admin Panel)
