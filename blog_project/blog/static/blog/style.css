@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+nav {
+    background-color: #333;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 12px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav span {
+    color: white;
+    margin: 0 12px;
+}
+
+main {
+    width: 80%;
+    max-width: 900px;
+    margin: 30px auto;
+}
+
+h1,
+h2,
+h3 {
+    color: #333;
+}
+
+article {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+article h3 {
+    margin-top: 0;
+}
+
+a {
+    color: #0066cc;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.message {
+    background-color: #e8f5e9;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.post-actions {
+    margin-right: 30px;
+    margin-left: 30px;
+    display: flex;
+    gap: 25px;
+}
+
+.post-actions a {
+    background-color: #333;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 5s;
+}
+
+.post-actions a:hover {
+    background-color: #555;
+}
+
+.RD {
+    background-color: #333;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 1s;
+}
+
+.RD:hover {
+    background-color: #555;
+}
+
+.ED{
+    background-color: #333;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 1s;
+}
+
+.ED:hover {
+    background-color: #555;
+}
+
+.DP{
+    background-color: #333;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 1s;
+}
+
+.DP:hover {
+    background-color: #555;
+}
+
+.H{
+    background-color: #333;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 1s;
+}
+
+.H:hover {
+    background-color: #555;
+}
+
+.post-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    main {
+        width: 90%;
+    }
+
+    nav a,
+    nav span {
+        display: block;
+        margin: 10px 0;
+    }
+
+    article img {
+        max-width: 100%;
+        height: auto;
+    }
+}

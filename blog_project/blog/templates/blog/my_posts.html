@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+My Posts - My Blog
+{% endblock %}
+
+{% block content %}
+
+<h1>My Posts</h1>
+
+{% if posts %}
+
+    {% for post in posts %}
+
+        <article>
+            <h2>{{ post.title }}</h2>
+
+            <p>
+                {{ post.created_at|date:"F d, Y" }}
+            </p>
+
+            <p>
+                {{ post.content|truncatewords:30 }}
+            </p>
+
+<div class="post-actions">
+
+    <a href="{% url 'post_detail' post.id %}">
+        Read More
+    </a>
+
+    <a href="{% url 'edit_post' post.id %}">
+        Edit
+    </a>
+
+    <a href="{% url 'delete_post' post.id %}">
+        Delete
+    </a>
+
+</div>
+        </article>
+
+        <hr>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>You have not created any posts yet.</p>
+
+    <a href="{% url 'create_post' %}">Create Your First Post</a>
+
+{% endif %}
+
+{% endblock %}
