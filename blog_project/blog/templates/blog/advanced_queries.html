@@ -1,0 +1,147 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Advanced Queries - My Blog
+{% endblock %}
+
+{% block content %}
+
+<h1>Advanced Django ORM Queries</h1>
+
+<p>
+    This page demonstrates the specific ORM lookups and related-object
+    queries used throughout the app, each shown in isolation.
+</p>
+
+<form method="GET" class="advanced-query-form">
+
+    <label>
+        Author username
+        <input type="text" name="author" value="{{ author_username }}" placeholder="e.g. admin">
+    </label>
+
+    <label>
+        Keyword
+        <input type="text" name="keyword" value="{{ keyword }}" placeholder="e.g. django">
+    </label>
+
+    <label>
+        Min likes
+        <input type="number" name="min_likes" value="{{ min_likes }}" min="0">
+    </label>
+
+    <label>
+        Min avg rating
+        <input type="number" name="min_rating" value="{{ min_rating }}" min="1" max="5" step="0.1">
+    </label>
+
+    <label>
+        More than N comments
+        <input type="number" name="min_comments" value="{{ min_comments }}" min="0">
+    </label>
+
+    <button type="submit">Run Queries</button>
+
+</form>
+
+<hr>
+
+<section class="query-block">
+    <h2>1. Posts by a specific user</h2>
+    <code>BlogPost.objects.filter(author__username=&quot;{{ author_username|default:'...' }}&quot;)</code>
+
+    {% if author_username %}
+        {% if posts_by_author %}
+            <ul>
+                {% for post in posts_by_author %}
+                    <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> — {{ post.author.username }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No posts by that username.</p>
+        {% endif %}
+    {% else %}
+        <p>Enter an author username above to run this query.</p>
+    {% endif %}
+</section>
+
+<section class="query-block">
+    <h2>2. Posts containing a keyword</h2>
+    <code>BlogPost.objects.filter(Q(title__icontains=&quot;{{ keyword|default:'...' }}&quot;) | Q(content__icontains=&quot;{{ keyword|default:'...' }}&quot;))</code>
+
+    {% if keyword %}
+        {% if posts_with_keyword %}
+            <ul>
+                {% for post in posts_with_keyword %}
+                    <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No posts match that keyword.</p>
+        {% endif %}
+    {% else %}
+        <p>Enter a keyword above to run this query.</p>
+    {% endif %}
+</section>
+
+<section class="query-block">
+    <h2>3. Posts with at least {{ min_likes }} like{{ min_likes|pluralize }}</h2>
+    <code>BlogPost.objects.annotate(like_total=Count('likes')).filter(like_total__gte={{ min_likes }})</code>
+
+    {% if posts_min_likes %}
+        <ul>
+            {% for post in posts_min_likes %}
+                <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> — {{ post.like_total }} like{{ post.like_total|pluralize }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts meet that like threshold yet.</p>
+    {% endif %}
+</section>
+
+<section class="query-block">
+    <h2>4. Posts with an average rating &ge; {{ min_rating }}</h2>
+    <code>BlogPost.objects.annotate(avg_rating=Avg('ratings__rating')).filter(avg_rating__gte={{ min_rating }})</code>
+
+    {% if posts_min_rating %}
+        <ul>
+            {% for post in posts_min_rating %}
+                <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> — {{ post.avg_rating|floatformat:1 }}/5</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts meet that rating threshold yet.</p>
+    {% endif %}
+</section>
+
+<section class="query-block">
+    <h2>5. Posts with more than {{ min_comments }} comment{{ min_comments|pluralize }}</h2>
+    <code>BlogPost.objects.annotate(comment_total=Count('comments')).filter(comment_total__gt={{ min_comments }})</code>
+
+    {% if posts_min_comments %}
+        <ul>
+            {% for post in posts_min_comments %}
+                <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> — {{ post.comment_total }} comment{{ post.comment_total|pluralize }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts meet that comment threshold yet.</p>
+    {% endif %}
+</section>
+
+<section class="query-block">
+    <h2>6. Related-object lookup: posts commented on by users with "a" in their username</h2>
+    <code>BlogPost.objects.filter(comments__author__username__icontains="a").distinct()</code>
+
+    {% if posts_with_matching_commenters %}
+        <ul>
+            {% for post in posts_with_matching_commenters %}
+                <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts match this query yet.</p>
+    {% endif %}
+</section>
+
+{% endblock %}

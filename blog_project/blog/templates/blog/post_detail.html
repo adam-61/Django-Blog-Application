@@ -13,7 +13,7 @@
 {% endif %}
 
 <p>
-    By {{ post.author.username }}
+    By <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
     | {{ post.created_at|date:"F d, Y" }}
     | Category: {{ post.category }}
 </p>
@@ -24,27 +24,119 @@
     {{ post.content }}
 </p>
 
+<div class="post-like">
+
+    <a href="{% url 'like_post' post.id %}">
+        {% if user_liked %}
+            Unlike
+        {% else %}
+            Like
+        {% endif %}
+    </a>
+
+    <span>
+        {{ like_count }} Like{{ like_count|pluralize }}
+    </span>
+
+</div>
+
+<div class="post-rating">
+
+    <h3>Rating</h3>
+
+    {% if average_rating %}
+        <p>
+            {{ average_rating|floatformat:1 }} / 5
+            ({{ total_ratings }} rating{{ total_ratings|pluralize }})
+        </p>
+    {% else %}
+        <p>No ratings yet.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="rating">
+            {{ rating_form.as_p }}
+            <button type="submit">
+                {% if user_rating %}
+                    Update Rating
+                {% else %}
+                    Submit Rating
+                {% endif %}
+            </button>
+        </form>
+
+    {% else %}
+
+        <p>
+            <a href="{% url 'login' %}">Login</a> to rate this post.
+        </p>
+
+    {% endif %}
+
+</div>
+
 <hr>
 
 {% if user == post.author %}
 
-<div class="post-buttons">
+    <div class="post-buttons">
 
-    <a class="ED" href="{% url 'edit_post' post.id %}">
-        Edit Post
-    </a>
+        <a class="ED" href="{% url 'edit_post' post.id %}">
+            Edit Post
+        </a>
 
-    <a class="DP" href="{% url 'delete_post' post.id %}">
-        Delete Post
-    </a>
+        <a class="DP" href="{% url 'delete_post' post.id %}">
+            Delete Post
+        </a>
 
-    <a class="H" href="{% url 'home' %}">
-        Back to Home
-    </a>
+        <a class="H" href="{% url 'home' %}">
+            Back to Home
+        </a>
 
-</div>
+    </div>
 
 {% endif %}
 
+
+<h2>Comments</h2>
+
+{% if comments %}
+    {% include 'blog/comment_thread.html' with comments=comments %}
+{% else %}
+    <p>No comments yet.</p>
+{% endif %}
+
+<hr>
+
+<h2>Write a Comment</h2>
+
+{% if user.is_authenticated %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input type="hidden" name="action" value="comment">
+
+        {{ form.as_p }}
+
+        <button type="submit">
+            Add Comment
+        </button>
+
+    </form>
+
+{% else %}
+
+    <p>
+        Please
+        <a href="{% url 'login' %}">login</a>
+        to leave a comment.
+    </p>
+
+{% endif %}
 
 {% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Popular Posts - My Blog
+{% endblock %}
+
+{% block content %}
+
+<h1>Popular Posts</h1>
+
+{% if posts %}
+
+    <ol class="popular-posts">
+
+        {% for post in posts %}
+
+            <li>
+
+                <a href="{% url 'post_detail' post.id %}">
+                    {{ post.title }}
+                </a>
+
+                <span class="popular-stats">
+                    — {{ post.like_count }} like{{ post.like_count|pluralize }},
+                    {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+                    {% if post.avg_rating %}
+                        , {{ post.avg_rating|floatformat:1 }}/5 avg rating
+                    {% endif %}
+                </span>
+
+            </li>
+
+        {% endfor %}
+
+    </ol>
+
+{% else %}
+
+    <p>No posts yet.</p>
+
+{% endif %}
+
+{% endblock %}

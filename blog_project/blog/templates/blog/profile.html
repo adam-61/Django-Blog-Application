@@ -1,0 +1,52 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+{{ profile_user.username }}'s Profile - My Blog
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ profile_user.username }}'s Profile</h1>
+
+<ul class="profile-stats">
+    <li>Posts: {{ stats.post_count }}</li>
+    <li>Comments: {{ stats.comment_count }}</li>
+    <li>Likes Given: {{ stats.likes_given }}</li>
+    <li>Ratings Given: {{ stats.ratings_given }}</li>
+    <li>Likes Received (all posts): {{ stats.likes_received }}</li>
+    {% if stats.first_post_date %}
+        <li>First Post: {{ stats.first_post_date|date:"F d, Y" }}</li>
+        <li>Latest Post: {{ stats.latest_post_date|date:"F d, Y" }}</li>
+    {% endif %}
+</ul>
+
+<hr>
+
+<h2>Posts by {{ profile_user.username }}</h2>
+
+{% if posts %}
+
+    {% for post in posts %}
+
+        <div class="post-summary">
+
+            <a href="{% url 'post_detail' post.id %}">
+                {{ post.title }}
+            </a>
+
+            <span class="popular-stats">
+                — {{ post.comment_count }} comment{{ post.comment_count|pluralize }},
+                {{ post.like_count }} like{{ post.like_count|pluralize }}
+            </span>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No posts yet.</p>
+
+{% endif %}
+
+{% endblock %}

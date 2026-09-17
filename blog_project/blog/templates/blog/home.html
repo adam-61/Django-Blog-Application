@@ -10,8 +10,15 @@ Home - My Blog
     <input
         type="text"
         name="q"
-        placeholder="Search posts..."
+        placeholder="Search title, content, or author..."
         value="{{ query }}"
+    >
+
+    <input
+        type="text"
+        name="category"
+        placeholder="Filter by category..."
+        value="{{ category }}"
     >
 
     <button type="submit">Search</button>
@@ -41,13 +48,21 @@ Home - My Blog
             {% endif %}
 
             <p>
-                By {{ post.author.username }}
+                By <a href="{% url 'profile' post.author.username %}">{{ post.author.username }}</a>
                 | {{ post.created_at|date:"F d, Y" }}
                 | Category: {{ post.category }}
             </p>
 
             <p>
                 {{ post.content|truncatewords:30 }}
+            </p>
+
+            <p class="post-stats">
+                {{ post.like_count }} like{{ post.like_count|pluralize }}
+                | {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+                {% if post.avg_rating %}
+                    | {{ post.avg_rating|floatformat:1 }}/5 avg rating
+                {% endif %}
             </p>
 
             <a class="RD" href="{% url 'post_detail' post.id %}">

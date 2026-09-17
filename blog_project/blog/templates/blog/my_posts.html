@@ -23,6 +23,32 @@ My Posts - My Blog
                 {{ post.content|truncatewords:30 }}
             </p>
 
+            <p class="post-stats">
+                {{ post.like_count }} like{{ post.like_count|pluralize }}
+                | {{ post.comment_count }} comment{{ post.comment_count|pluralize }}
+                {% if post.avg_rating %}
+                    | {{ post.avg_rating|floatformat:1 }}/5 avg rating
+                {% endif %}
+            </p>
+
+            {% with post.comments.all|slice:":3" as recent_comments %}
+                {% if recent_comments %}
+                    <p class="recent-activity">
+                        Recent commenters:
+                        {% for comment in recent_comments %}{{ comment.author.username }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                {% endif %}
+            {% endwith %}
+
+            {% with post.likes.all|slice:":3" as recent_likes %}
+                {% if recent_likes %}
+                    <p class="recent-activity">
+                        Liked by:
+                        {% for like in recent_likes %}{{ like.user.username }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                {% endif %}
+            {% endwith %}
+
 <div class="post-actions">
 
     <a href="{% url 'post_detail' post.id %}">
