@@ -2,7 +2,7 @@
 
 A full-featured Blog Application built using Django, Python, HTML, and CSS.
 
-This project started as a Django assignment covering models, forms, templates, CRUD operations, and user authentication, and was later extended with model relationships, nested comments, likes, ratings, ORM aggregation, and query optimization.
+This project started as a Django blog covering models, forms, templates, CRUD operations, and user authentication, and was later extended with model relationships, nested comments, likes, ratings, ORM aggregation, and query optimization.
 
 ## Project Overview
 
